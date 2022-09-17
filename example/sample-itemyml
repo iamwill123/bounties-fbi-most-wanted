@@ -1,0 +1,53 @@
+@id: "https://api.fbi.gov/@wanted-person/3f5d03cb681c454f8cc324c3303a579d"
+additional_information: null
+age_max: null
+age_min: null
+age_range: null
+aliases: (2) ['Chris Gardner', 'Christopher Charles Gardner']
+build: null
+caution: "<p>Christopher C. Gardner is wanted for his alleged participation in a wire fraud scheme and the transportation of a stolen motor vehicle in foreign commerce. It is alleged that in March 2001, Gardner burglarized a business in Milwaukee, Wisconsin, and stole a rare 1938 Talbot Lago T150C-SS “Teardrop” Coupe motor vehicle, chassis #90108. The vehicle is one of only approximately 16 such vehicles ever made. Gardner allegedly shipped the vehicle to Switzerland in 2006, had it restored in France, and in 2015 sold it to a buyer in the United States for $7.6 million. <br /><br /></p>\r\n<p>On May 29, 2019, Gardner was indicted on 4 counts of wire fraud and 1 count of transportation of stolen motor vehicle in foreign commerce in the United States District Court, Eastern District of Wisconsin, and a federal warrant was issued for his arrest. In June 2021, Gardner was arrested in Italy, placed on house arrest, and fled in November 2021. His whereabouts remain unknown. </p>"
+complexion: null
+coordinates: []
+dates_of_birth_used: (2) ['July 8, 1955', 'July 8, 1954']
+description: "Wire Fraud; Transportation of Stolen Motor Vehicle in Foreign Commerce"
+details: null
+eyes: "blue"
+eyes_raw: "Blue"
+field_offices: ['milwaukee']
+files: [{…}]
+hair: "gray"
+hair_raw: "Gray"
+height_max: 71
+height_min: 71
+images: (3) [{…}, {…}, {…}]
+languages: (3) ['English', 'French', 'German']
+legat_names: null
+locations: null
+modified: "2022-04-21T23:44:09+00:00"
+nationality: "American"
+ncic: "W496951108"
+occupations: ['Classic/Antique/Rare Car Collector']
+path: "/wanted/wcc/christopher-c-gardner"
+person_classification: "Main"
+place_of_birth: "New Orleans, Louisiana"
+possible_countries: null
+possible_states: null
+publication: "2021-12-08T10:43:00"
+race: "white"
+race_raw: "White"
+remarks: "<p>Gardner is a U.S. citizen who has been a permanent resident of Switzerland for the past 20 years. He conducts business throughout Europe and often travels to France, Italy, England, and the United States. Gardner is believed to be living in Switzerland or France.</p>"
+reward_max: 0
+reward_min: 0
+reward_text: "The FBI is offering a reward of up to $10,000 for information leading to the arrest of Christopher Gardner."
+scars_and_marks: "Gardner may have scars on the left side of his chin and on his left forearm."
+sex: "Male"
+status: "captured"
+subjects: ['White-Collar Crime']
+suspects: null
+title: "CHRISTOPHER C. GARDNER"
+uid: "3f5d03cb681c454f8cc324c3303a579d"
+url: "https://www.fbi.gov/wanted/wcc/christopher-c-gardner"
+warning_message: "SHOULD BE CONSIDERED AN INTERNATIONAL FLIGHT RISK."
+weight: "175 pounds"
+weight_max: 175
+weight_min:
