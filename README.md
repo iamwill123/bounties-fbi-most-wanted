@@ -1,6 +1,10 @@
 ## Purpose
 
-I found this API and I am using it for NextJS + TS practice, and thought it would be interesting to create a FBI bounty site. I feel a bit dedicated to it, the FBI can use a hand with better UI & UX for the most wanted people in the world. Any PRs are welcome.
+I found this API, [FBI most wanted](https://www.fbi.gov/wanted/api), and thought it would be interesting to create a FBI bounty site. The API is a bit messy, misspelled keys (i.e. "legat_names" is most likely "legal_names"), a lot of the images don't work so you'll see (400s) in the network tab.
+
+I feel a bit dedicated to it, the FBI can use a hand with better UI & UX for the most wanted people in the world. Any PRs are welcome.
+
+Techstack: [ NextJS, TypeScript, JavaScript, hosted on Vercel ]
 
 ## Getting Started
 
