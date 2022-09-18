@@ -82,6 +82,10 @@ const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRe
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
 	const isMobile = useMediaQuery('(max-width: 768px)')
+	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage(
+		'current-page',
+		1
+	)
 
 	const {
 		list,
@@ -92,11 +96,6 @@ const Home: NextPage = () => {
 		totalPages,
 		fetchDataByPageNum,
 	} = data
-
-	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage(
-		'current-page',
-		currentPage
-	)
 
 	const items: ItemsType[] = list[list.currentPage]?.items
 
@@ -150,7 +149,7 @@ const Home: NextPage = () => {
 										position: 'relative',
 									}}
 								>
-									<p>{getRewardMoney(item?.reward_text || '')}</p>
+									{item?.reward_text && <p style={{ color: 'gold' }}>Bounty {getRewardMoney(item?.reward_text || '')}</p>}
 									<p>{item?.reward_text || 'No reward listed'}</p>
 									<p>{item?.description || 'No description'}</p>
 									{item?.details && (
