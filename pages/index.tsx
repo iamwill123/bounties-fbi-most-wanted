@@ -1,10 +1,12 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
+
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { PeopleListType, useMostWantedContext, ItemsType, ImageType } from '../context/WantedListProvider'
 import useMediaQuery from '../hooks/useMediaQuery'
 import ImageWithHideOnError from '../components/ImageWithOnError'
+import { useLocalStorage } from 'usehooks-ts'
 
 type MostWantedContextType = {
 	list: PeopleListType
@@ -22,14 +24,21 @@ const inlineStyles = {
 }
 
 const Pagination = ({ currentPage, prevPage, nextPage, getPageBy }: any) => {
-	return <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between' }}>
+	return <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', marginBottom: '10px' }}>
 		{currentPage === 1 ? <></> : <button style={{ cursor: 'pointer' }} onClick={() => getPageBy(prevPage)}>Previous</button>}
 		<button style={{ cursor: 'pointer' }} onClick={() => getPageBy(nextPage)}>Next</button>
 	</div>
 }
+
+// todo add loader for images
+// todo
+
+const getRewardMoney = (str: string | any) => !!str && str.match(/[\d,]+\.\d+/)[0]
+
 const Home: NextPage = () => {
-	const isMobile = useMediaQuery('(max-width: 768px)')
 	const data: MostWantedContextType = useMostWantedContext()
+	const isMobile = useMediaQuery('(max-width: 768px)')
+	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage('current-page', 1)
 
 	const {
 		list,
@@ -43,8 +52,14 @@ const Home: NextPage = () => {
 
 	const items: ItemsType[] = list[list.currentPage]?.items
 
-	const getPageBy = useCallback(async (pg: number) =>
+	useEffect(() => {
+		fetchDataByPageNum(savedCurrentPage)
+	}, [savedCurrentPage])
+
+	const getPageBy = useCallback(async (pg: number) => {
+		setSavedCurrentPage(pg)
 		await fetchDataByPageNum(pg)
+	}
 		, [fetchDataByPageNum])
 
 	return (
@@ -58,8 +73,8 @@ const Home: NextPage = () => {
 			<main className={styles.main}>
 				<div style={inlineStyles.nav}>
 					<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-						<h1 style={inlineStyles.noMargin}>Bounties</h1>
-						<h2 style={inlineStyles.noMargin}>FBIs most wanted</h2>
+						<h2 style={inlineStyles.noMargin}>Bounties</h2>
+						<h3 style={inlineStyles.noMargin}>FBIs most wanted</h3>
 					</div>
 					<b style={{ width: '100%', textAlign: 'right' }}>pg {currentPage} of {amtOfPages}</b>
 
@@ -73,6 +88,7 @@ const Home: NextPage = () => {
 									style={{
 										display: 'block', width: '100%', position: 'relative'
 									}}>
+									{/* <p>{getRewardMoney(item?.reward_text || '')}</p> */}
 									<p>{item?.reward_text || 'No reward listed'}</p>
 									<p>{item?.description || 'No description'}</p>
 									{item?.details && <div dangerouslySetInnerHTML={{ __html: item?.details }} />}
@@ -101,6 +117,7 @@ const Home: NextPage = () => {
 				</div>
 			</main>
 			<Pagination currentPage={currentPage} prevPage={prevPage} nextPage={nextPage} getPageBy={getPageBy} />
+
 			<footer className={styles.footer}>💰 Get that 💰</footer>
 		</div >
 	)

@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
 import Image from 'next/image'
+import React, { useState } from 'react'
 
 const ImageWithHideOnError = (props: any) => {
   const [hideImage, setHideImage] = useState(false)
@@ -11,6 +11,7 @@ const ImageWithHideOnError = (props: any) => {
       >
         <Image
           {...props}
+          style={{ background: 'white' }}
           onError={() => {
             setHideImage(true)
           }}
