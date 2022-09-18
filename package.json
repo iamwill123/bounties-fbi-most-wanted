@@ -1,5 +1,6 @@
 {
   "name": "fbi-most-wanted-bounties",
+  "author": "supwill.dev",
   "version": "0.1.0",
   "private": false,
   "scripts": {
