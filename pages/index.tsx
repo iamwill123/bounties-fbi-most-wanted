@@ -82,10 +82,6 @@ const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRe
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
 	const isMobile = useMediaQuery('(max-width: 768px)')
-	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage(
-		'current-page',
-		1
-	)
 
 	const {
 		list,
@@ -96,6 +92,11 @@ const Home: NextPage = () => {
 		totalPages,
 		fetchDataByPageNum,
 	} = data
+
+	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage(
+		'current-page',
+		currentPage
+	)
 
 	const items: ItemsType[] = list[list.currentPage]?.items
 
