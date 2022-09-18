@@ -26,10 +26,10 @@ type MostWantedContextType = {
 const inlineStyles = {
 	noMargin: { margin: 0, width: '250px' },
 	nav: {
-		position: 'sticky',
+		position: 'sticky' as 'sticky',
 		top: '0px',
 		display: 'flex',
-		flexDirection: 'row',
+		flexDirection: 'row' as 'row',
 		justifyContent: 'space-between',
 		width: '100%',
 		alignItems: 'end',
