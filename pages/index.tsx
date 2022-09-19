@@ -77,7 +77,9 @@ const Pagination = ({ currentPage, prevPage, nextPage, getPageBy }: any) => {
 
 // * Match number
 const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
+
 const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRegex)
+// const getHighestBounty = (arr: [string]) => { }
 
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
@@ -98,10 +100,14 @@ const Home: NextPage = () => {
 	} = data
 
 	const items: ItemsType[] = list[list.currentPage]?.items
+	// let rangeOfBounties: string[] = []
 
 	useEffect(() => {
 		// * fetch from localstorage page
-		fetchDataByPageNum(savedCurrentPage)
+		const fetchIt = async () =>
+			await fetchDataByPageNum(savedCurrentPage)
+		setTimeout(() => fetchIt(), 0)
+
 	}, [savedCurrentPage])
 
 	const getPageBy = useCallback(
@@ -149,7 +155,7 @@ const Home: NextPage = () => {
 										position: 'relative',
 									}}
 								>
-									{item?.reward_text && <p style={{ color: 'gold' }}>Bounty {getRewardMoney(item?.reward_text || '')}</p>}
+									{item?.reward_text && <h3 style={{ color: 'gold' }}>Bounty {getRewardMoney(item?.reward_text || '')}</h3>}
 									<p>{item?.reward_text || 'No reward listed'}</p>
 									<p>{item?.description || 'No description'}</p>
 									{item?.details && (
