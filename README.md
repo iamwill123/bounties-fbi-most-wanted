@@ -32,3 +32,14 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## TODOs
+
+[] Fix bounty regex to add strings ['million']
+[] Add an image zoom utility or create own
+[] Utilize UI lib (chakra)
+[] Add a hero image for top bounty on each page
+[] Sorting (allow sort by bounty, by date, etc)
+
+## Nice to haves
+- Use NextJS API or Golang to redo the API
