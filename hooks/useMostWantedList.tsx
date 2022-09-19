@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 import { PeopleListType } from '../context/WantedListProvider'
 import { isInt } from '../utils'
 
 const URL = `https://api.fbi.gov/wanted/v1/list?page=`
 
 const useMostWantedList = () => {
+	const [savedCurrentPage] = useLocalStorage(
+		'current-page',
+		1
+	)
 	const [list, setList] = useState<PeopleListType | any>({})
 
 	const { currentPage, totalPages }: PeopleListType = ({} = list)
@@ -16,7 +21,7 @@ const useMostWantedList = () => {
 	const nextPage = currentPage + 1
 
 	useEffect(() => {
-		fetchDataByPageNum(1)
+		fetchDataByPageNum(savedCurrentPage)
 	}, [])
 
 	const fetchDataByPageNum = async (pageNum: number | string) => {

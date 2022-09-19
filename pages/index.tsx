@@ -84,7 +84,7 @@ const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRe
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
 	const isMobile = useMediaQuery('(max-width: 768px)')
-	const [savedCurrentPage, setSavedCurrentPage] = useLocalStorage(
+	const [, setSavedCurrentPage] = useLocalStorage(
 		'current-page',
 		1
 	)
@@ -101,14 +101,6 @@ const Home: NextPage = () => {
 
 	const items: ItemsType[] = list[list.currentPage]?.items
 	// let rangeOfBounties: string[] = []
-
-	useEffect(() => {
-		// * fetch from localstorage page
-		const fetchIt = async () =>
-			await fetchDataByPageNum(savedCurrentPage)
-		setTimeout(() => fetchIt(), 0)
-
-	}, [savedCurrentPage])
 
 	const getPageBy = useCallback(
 		async (pg: number) => {
