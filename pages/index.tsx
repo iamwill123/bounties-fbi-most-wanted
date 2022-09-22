@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -80,7 +80,25 @@ const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
 
 const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRegex)
 // const getHighestBounty = (arr: [string]) => { }
+const getInteger = (str: string | any): any => {
+	return typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
+}
 
+const TopBountyHeader = ({ items }: any) => {
+	let hashTable = {}
+	if (items && items.length) {
+		for (const i of items) {
+			hashTable = { ...hashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
+		}
+	}
+
+	console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", hashTable)
+	return <>{
+		items && items.map((i: ItemsType) => (
+			<div key={i.uid}>{getRewardMoney(i?.reward_text)}</div>
+		))
+	}</>
+}
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
 	const isMobile = useMediaQuery('(max-width: 768px)')
@@ -88,6 +106,8 @@ const Home: NextPage = () => {
 		'current-page',
 		1
 	)
+
+	let arrOfBounty: any[] = []
 
 	const {
 		list,
@@ -110,6 +130,7 @@ const Home: NextPage = () => {
 		},
 		[fetchDataByPageNum]
 	)
+
 
 	return (
 		<div className={styles.container}>
@@ -136,6 +157,9 @@ const Home: NextPage = () => {
 					</b>
 				</div>
 				<div>
+					<TopBountyHeader items={items} />
+
+					<hr />
 					{items &&
 						items.map((item: ItemsType) => {
 							return (
@@ -180,7 +204,9 @@ const Home: NextPage = () => {
 									<hr />
 								</div>
 							)
-						})}
+						})
+					}
+
 				</div>
 			</main>
 			<Pagination
