@@ -83,12 +83,12 @@ const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRe
 const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
 
 const TopBountyHeader = ({ items }: any) => {
-	let hashTable = {}
-	if (items && items.length) {
-		for (const i of items) {
-			hashTable = { ...hashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
-		}
-	}
+	// let hashTable = {}
+	// if (items && items.length) {
+	// 	for (const i of items) {
+	// 		hashTable = { ...hashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
+	// 	}
+	// }
 
 	// console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", hashTable)
 	// TODO: sort below using hash table
