@@ -80,9 +80,7 @@ const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
 
 const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRegex)
 // const getHighestBounty = (arr: [string]) => { }
-const getInteger = (str: string | any): any => {
-	return typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
-}
+const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
 
 const TopBountyHeader = ({ items }: any) => {
 	let hashTable = {}
@@ -92,7 +90,8 @@ const TopBountyHeader = ({ items }: any) => {
 		}
 	}
 
-	console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", hashTable)
+	// console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", hashTable)
+	// TODO: sort below using hash table
 	return <>{
 		items && items.map((i: ItemsType) => (
 			<div key={i.uid}>{getRewardMoney(i?.reward_text)}</div>
@@ -106,8 +105,6 @@ const Home: NextPage = () => {
 		'current-page',
 		1
 	)
-
-	let arrOfBounty: any[] = []
 
 	const {
 		list,
