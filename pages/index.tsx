@@ -12,6 +12,7 @@ import {
 import useMediaQuery from '../hooks/useMediaQuery'
 import ImageWithHideOnError from '../components/ImageWithOnError'
 import { useLocalStorage } from 'usehooks-ts'
+import { replace, match, keys, uniq, descend } from 'ramda'
 
 type MostWantedContextType = {
 	list: PeopleListType
@@ -78,19 +79,29 @@ const Pagination = ({ currentPage, prevPage, nextPage, getPageBy }: any) => {
 // * Match number
 const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
 
-const getRewardMoney = (str: string | any) => !!str && str.match(numAfter$OnlyRegex)
+const getRewardMoney = (str: string | any) => !!str && match(numAfter$OnlyRegex, str)
 // const getHighestBounty = (arr: [string]) => { }
-const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
+// const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
+const getInteger = (str: string | any): any => str[0] && replace(/[^\d]/g, '', str[0])
 
 const TopBountyHeader = ({ items }: any) => {
-	// let hashTable = {}
-	// if (items && items.length) {
-	// 	for (const i of items) {
-	// 		hashTable = { ...hashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
-	// 	}
-	// }
+	let unorderedHashTable: any = {}
+	if (items && items.length) {
+		for (const i of items) {
+			unorderedHashTable = { ...unorderedHashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
+		}
+	}
 
-	// console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", hashTable)
+	console.log("🚀 ~ file: index.tsx ~ line 96 ~ TopBountyHeader ~ keys(unorderedHashTable).reverse()", keys(unorderedHashTable).reverse())
+	const orderedHashTable = keys(unorderedHashTable).reverse().reduce(
+		(arr: any, key: any) => {
+			arr.push(unorderedHashTable[key])
+			return arr
+		},
+		[]
+	)
+
+	console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", orderedHashTable[1][0])
 	// TODO: sort below using hash table
 	return <>{
 		items && items.map((i: ItemsType) => (
@@ -132,9 +143,11 @@ const Home: NextPage = () => {
 	return (
 		<div className={styles.container}>
 			<Head>
-				<title>fbi most wanted</title>
+				<title>FBI's most wanted</title>
+				<meta name="author" content="supwill.dev" />
 				<meta name="description" content="fbi's most wanted bounties" />
 				<link rel="icon" href="/favicon.ico" />
+
 			</Head>
 
 			<main className={styles.main}>
