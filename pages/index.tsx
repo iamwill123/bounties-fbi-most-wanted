@@ -12,7 +12,7 @@ import {
 import useMediaQuery from '../hooks/useMediaQuery'
 import ImageWithHideOnError from '../components/ImageWithOnError'
 import { useLocalStorage } from 'usehooks-ts'
-import { replace, match, keys, uniq, descend } from 'ramda'
+import { replace, match, find, propEq, sort } from 'ramda'
 
 type MostWantedContextType = {
 	list: PeopleListType
@@ -84,29 +84,40 @@ const getRewardMoney = (str: string | any) => !!str && match(numAfter$OnlyRegex,
 // const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
 const getInteger = (str: string | any): any => str[0] && replace(/[^\d]/g, '', str[0])
 
+const isNotUndefined = (n: any) => n !== undefined
+
 const TopBountyHeader = ({ items }: any) => {
-	let unorderedHashTable: any = {}
+	console.log("🚀 ~ file: index.tsx ~ line 90 ~ TopBountyHeader ~ items", items)
+	let unorderedArrOfNums: any[] = []
 	if (items && items.length) {
 		for (const i of items) {
-			unorderedHashTable = { ...unorderedHashTable, [getInteger(getRewardMoney(i?.reward_text))]: getRewardMoney(i?.reward_text) }
+			const rewardMoney = getInteger(getRewardMoney(i?.reward_text))
+			if (isNotUndefined(rewardMoney))
+				unorderedArrOfNums.push({
+					id: i.uid,
+					bounty: rewardMoney
+				})
 		}
 	}
 
-	console.log("🚀 ~ file: index.tsx ~ line 96 ~ TopBountyHeader ~ keys(unorderedHashTable).reverse()", keys(unorderedHashTable).reverse())
-	const orderedHashTable = keys(unorderedHashTable).reverse().reduce(
-		(arr: any, key: any) => {
-			arr.push(unorderedHashTable[key])
-			return arr
-		},
-		[]
-	)
+	const desc = (a: any, b: any) => b.bounty - a.bounty
+	const sortedArr = sort(desc, unorderedArrOfNums)
+	const highestBountyId = sortedArr[0]?.id
 
-	console.log("🚀 ~ file: index.tsx ~ line 89 ~ hashTable ~ hashTable", orderedHashTable[1][0])
+	const getBountyProfile = find(propEq('uid', highestBountyId))
+	const bountyProfile = items && getBountyProfile(items)
+	console.log("🚀 ~ file: index.tsx ~ line 109 ~ TopBountyHeader ~ bountyProfile", bountyProfile)
 	// TODO: sort below using hash table
 	return <>{
-		items && items.map((i: ItemsType) => (
-			<div key={i.uid}>{getRewardMoney(i?.reward_text)}</div>
-		))
+		bountyProfile?.reward_text &&
+		<div>
+			<h2 style={{ color: 'gold' }}>
+				highest bounty: {getRewardMoney(bountyProfile.reward_text)}
+			</h2>
+			<p>
+				{bountyProfile.reward_text}
+			</p>
+		</div>
 	}</>
 }
 const Home: NextPage = () => {
