@@ -1,11 +1,5 @@
-import {
-	createContext,
-	JSXElementConstructor,
-	ReactElement,
-	ReactFragment,
-	ReactPortal,
-	useContext,
-} from 'react'
+import { createContext, JSXElementConstructor, ReactElement, ReactFragment, ReactPortal, useContext } from 'react'
+
 import useMostWantedList from '../hooks/useMostWantedList'
 
 export type File = {
@@ -74,6 +68,16 @@ export type ItemsType = {
 	weight: string | null
 	weight_max: number | null
 	weight_min: number | null
+}
+
+export type MostWantedContextType = {
+	list: PeopleListType
+	currentPage: number
+	prevPage: number
+	nextPage: number
+	amtOfPages: number
+	totalPages: number
+	fetchDataByPageNum: (x: number) => Promise<any>
 }
 
 export interface PeopleListType {

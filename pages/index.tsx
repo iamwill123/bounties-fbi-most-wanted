@@ -4,25 +4,16 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import {
-	PeopleListType,
 	useMostWantedContext,
 	ItemsType,
 	ImageType,
+	MostWantedContextType,
 } from '../context/WantedListProvider'
 import useMediaQuery from '../hooks/useMediaQuery'
 import ImageWithHideOnError from '../components/ImageWithOnError'
 import { useLocalStorage } from 'usehooks-ts'
 import { replace, match, find, propEq, sort } from 'ramda'
-
-type MostWantedContextType = {
-	list: PeopleListType
-	currentPage: number
-	prevPage: number
-	nextPage: number
-	amtOfPages: number
-	totalPages: number
-	fetchDataByPageNum: (x: number) => Promise<any>
-}
+import { Pagination } from '../components/Pagination'
 
 const inlineStyles = {
 	noMargin: { margin: 0, width: '250px' },
@@ -49,32 +40,6 @@ const scrollBackToTop = () => {
 	})
 }
 
-const Pagination = ({ currentPage, prevPage, nextPage, getPageBy }: any) => {
-	return (
-		<div
-			style={{
-				display: 'flex',
-				width: '100%',
-				justifyContent: 'space-between',
-				marginBottom: '10px',
-			}}
-		>
-			{currentPage === 1 ? (
-				<></>
-			) : (
-				<button
-					style={{ cursor: 'pointer' }}
-					onClick={() => getPageBy(prevPage)}
-				>
-					Previous
-				</button>
-			)}
-			<button style={{ cursor: 'pointer' }} onClick={() => getPageBy(nextPage)}>
-				Next
-			</button>
-		</div>
-	)
-}
 
 // * Match number
 const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
@@ -87,7 +52,6 @@ const getInteger = (str: string | any): any => str[0] && replace(/[^\d]/g, '', s
 const isNotUndefined = (n: any) => n !== undefined
 
 const TopBountyHeader = ({ items }: any) => {
-	console.log("🚀 ~ file: index.tsx ~ line 90 ~ TopBountyHeader ~ items", items)
 	let unorderedArrOfNums: any[] = []
 	if (items && items.length) {
 		for (const i of items) {
@@ -106,7 +70,7 @@ const TopBountyHeader = ({ items }: any) => {
 
 	const getBountyProfile = find(propEq('uid', highestBountyId))
 	const bountyProfile = items && getBountyProfile(items)
-	console.log("🚀 ~ file: index.tsx ~ line 109 ~ TopBountyHeader ~ bountyProfile", bountyProfile)
+
 	// TODO: sort below using hash table
 	return <>{
 		bountyProfile?.reward_text &&
