@@ -12,8 +12,9 @@ import {
 import useMediaQuery from '../hooks/useMediaQuery'
 import ImageWithHideOnError from '../components/ImageWithOnError'
 import { useLocalStorage } from 'usehooks-ts'
-import { replace, match, find, propEq, sort } from 'ramda'
 import { Pagination } from '../components/Pagination'
+import { getRewardMoney, scrollBackToTop } from '../utils'
+import TopBountyHeader from '../components/Header'
 
 const inlineStyles = {
 	noMargin: { margin: 0, width: '250px' },
@@ -32,58 +33,6 @@ const inlineStyles = {
 	},
 }
 
-const scrollBackToTop = () => {
-	return window.scroll({
-		top: 0,
-		left: 0,
-		behavior: 'auto'
-	})
-}
-
-
-// * Match number
-const numAfter$OnlyRegex = /\$\d+(?:,\d+)*(?:\.\d+)?/
-
-const getRewardMoney = (str: string | any) => !!str && match(numAfter$OnlyRegex, str)
-// const getHighestBounty = (arr: [string]) => { }
-// const getInteger = (str: string | any): any => typeof str[0] === "string" && str[0].replace(/[^\d]/g, '')
-const getInteger = (str: string | any): any => str[0] && replace(/[^\d]/g, '', str[0])
-
-const isNotUndefined = (n: any) => n !== undefined
-
-const TopBountyHeader = ({ items }: any) => {
-	let unorderedArrOfNums: any[] = []
-	if (items && items.length) {
-		for (const i of items) {
-			const rewardMoney = getInteger(getRewardMoney(i?.reward_text))
-			if (isNotUndefined(rewardMoney))
-				unorderedArrOfNums.push({
-					id: i.uid,
-					bounty: rewardMoney
-				})
-		}
-	}
-
-	const desc = (a: any, b: any) => b.bounty - a.bounty
-	const sortedArr = sort(desc, unorderedArrOfNums)
-	const highestBountyId = sortedArr[0]?.id
-
-	const getBountyProfile = find(propEq('uid', highestBountyId))
-	const bountyProfile = items && getBountyProfile(items)
-
-	// TODO: sort below using hash table
-	return <>{
-		bountyProfile?.reward_text &&
-		<div>
-			<h2 style={{ color: 'gold' }}>
-				highest bounty: {getRewardMoney(bountyProfile.reward_text)}
-			</h2>
-			<p>
-				{bountyProfile.reward_text}
-			</p>
-		</div>
-	}</>
-}
 const Home: NextPage = () => {
 	const data: MostWantedContextType = useMostWantedContext()
 	const isMobile = useMediaQuery('(max-width: 768px)')
@@ -107,7 +56,11 @@ const Home: NextPage = () => {
 
 	const getPageBy = useCallback(
 		async (pg: number) => {
-			scrollBackToTop()
+			scrollBackToTop({
+				top: 0,
+				left: 0,
+				behavior: 'auto'
+			})
 			setSavedCurrentPage(pg)
 			await fetchDataByPageNum(pg)
 		},
