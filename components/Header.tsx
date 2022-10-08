@@ -1,6 +1,8 @@
 import { find, propEq, sort } from 'ramda'
 
+import { ImageType } from '../context/WantedListProvider'
 import { getInteger, getRewardMoney, isNotUndefined } from "../utils"
+import ImageWithHideOnError from './ImageWithOnError'
 
 const TopBountyHeader = ({ items }: any) => {
   let unorderedArrOfNums: any[] = []
@@ -22,13 +24,38 @@ const TopBountyHeader = ({ items }: any) => {
   const getBountyProfile = find(propEq('uid', highestBountyId))
   const bountyProfile = items && getBountyProfile(items)
 
-  // TODO: sort below using hash table
   return <>{
     bountyProfile?.reward_text &&
-    <div>
-      <h2 style={{ color: 'gold' }}>
-        highest bounty: {getRewardMoney(bountyProfile.reward_text)}
-      </h2>
+    <div style={{ backgroundColor: '#0a3c88', margin: 'auto', textAlign: 'center' }}>
+      <h1 style={{ color: 'gold', fontSize: '40px' }}>
+        Highest bounty - {getRewardMoney(bountyProfile.reward_text)}
+      </h1>
+      <div>
+        <div
+          style={{
+            display: 'flex',
+            maxWidth: '1000px',
+            margin: 'auto',
+            justifyContent: 'center',
+            flexFlow: 'wrap',
+          }}
+        >
+          {bountyProfile?.images.map(
+            ({ caption, original }: ImageType, i: number) => {
+              return (
+                <div key={caption + i}>
+                  <ImageWithHideOnError
+                    src={original}
+                    alt={caption}
+                    layout="fill"
+                    objectFit="contain"
+                  />
+                </div>
+              )
+            }
+          )}
+        </div>
+      </div>
       <p>
         {bountyProfile.reward_text}
       </p>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 import type { NextPage } from 'next'
 import Head from 'next/head'
@@ -52,7 +52,6 @@ const Home: NextPage = () => {
 	} = data
 
 	const items: ItemsType[] = list[list.currentPage]?.items
-	// let rangeOfBounties: string[] = []
 
 	const getPageBy = useCallback(
 		async (pg: number) => {
@@ -75,7 +74,6 @@ const Home: NextPage = () => {
 				<meta name="author" content="supwill.dev" />
 				<meta name="description" content="fbi's most wanted bounties" />
 				<link rel="icon" href="/favicon.ico" />
-
 			</Head>
 
 			<main className={styles.main}>
@@ -94,7 +92,7 @@ const Home: NextPage = () => {
 						pg {currentPage} of {amtOfPages}
 					</b>
 				</div>
-				<div>
+				<div style={{ maxWidth: '750px' }}>
 					<TopBountyHeader items={items} />
 
 					<hr />
