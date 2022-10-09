@@ -26,10 +26,18 @@ const TopBountyHeader = ({ items }: any) => {
 
   return <>{
     bountyProfile?.reward_text &&
-    <div style={{ backgroundColor: '#0a3c88', margin: 'auto', textAlign: 'center' }}>
-      <h1 style={{ color: 'gold', fontSize: '40px' }}>
-        Highest bounty - {getRewardMoney(bountyProfile.reward_text)}
-      </h1>
+    <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row', padding: '40px 0px' }}>
+      <div style={{ width: '100%' }}>
+        <div style={{ color: '#718096', fontSize: '1.25rem', textTransform: 'uppercase' }}>
+          Highest bounty
+        </div>
+        <div style={{ color: 'white', fontSize: '3rem', lineHeight: '1.2' }}>
+          {getRewardMoney(bountyProfile.reward_text)}
+        </div>
+        <p>
+          {bountyProfile.reward_text}
+        </p>
+      </div>
       <div>
         <div
           style={{
@@ -56,9 +64,6 @@ const TopBountyHeader = ({ items }: any) => {
           )}
         </div>
       </div>
-      <p>
-        {bountyProfile.reward_text}
-      </p>
     </div>
   }</>
 }

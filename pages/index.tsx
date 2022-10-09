@@ -27,7 +27,7 @@ const inlineStyles = {
 		width: '100%',
 		alignItems: 'end',
 		margin: '5px',
-		background: 'black',
+		background: '#1A202C',
 		zIndex: 9,
 		borderBottom: '1px solid rgb(255 255 255 / 40%)',
 	},
@@ -92,10 +92,10 @@ const Home: NextPage = () => {
 						pg {currentPage} of {amtOfPages}
 					</b>
 				</div>
-				<div style={{ maxWidth: '750px' }}>
+				<div style={{ maxWidth: '600px' }}>
 					<TopBountyHeader items={items} />
 
-					<hr />
+					<hr style={{ marginBottom: '2rem' }} />
 					{items &&
 						items.map((item: ItemsType) => {
 							return (
@@ -137,7 +137,7 @@ const Home: NextPage = () => {
 											}
 										)}
 									</div>
-									<hr />
+									<hr style={{ marginBottom: '2rem' }} />
 								</div>
 							)
 						})
