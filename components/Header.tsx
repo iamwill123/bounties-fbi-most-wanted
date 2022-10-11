@@ -3,8 +3,11 @@ import { find, propEq, sort } from 'ramda'
 import { ImageType } from '../context/WantedListProvider'
 import { getInteger, getRewardMoney, isNotUndefined } from "../utils"
 import ImageWithHideOnError from './ImageWithOnError'
+import useMediaQuery from '../hooks/useMediaQuery'
 
 const TopBountyHeader = ({ items }: any) => {
+  const isMobile = useMediaQuery('(max-width: 768px)')
+
   let unorderedArrOfNums: any[] = []
   if (items && items.length) {
     for (const i of items) {
@@ -26,7 +29,7 @@ const TopBountyHeader = ({ items }: any) => {
 
   return <>{
     bountyProfile?.reward_text &&
-    <div style={{ margin: 'auto', display: 'flex', flexDirection: 'row', padding: '40px 0px' }}>
+    <div style={{ margin: 'auto', display: 'flex', flexDirection: isMobile ? 'column' : 'row', padding: '40px 0px' }}>
       <div style={{ width: '100%' }}>
         <div style={{ color: '#718096', fontSize: '1.25rem', textTransform: 'uppercase' }}>
           Highest bounty
